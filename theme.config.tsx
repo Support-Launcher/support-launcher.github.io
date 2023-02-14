@@ -13,10 +13,6 @@ const config: DocsThemeConfig = {
   footer: {
     text: <span>Powered with <a href="https://nextra.site/">Nextra</a></span>,
   },
-  i18n: [
-    { locale: 'en', text: 'English' },
-    { locale: 'fr', text: 'Français' }
-  ],
   banner: {
     key: 'alpha',
     text : <p>⚠ This website is currently WIP! Some content may be missing. ⚠</p>,
