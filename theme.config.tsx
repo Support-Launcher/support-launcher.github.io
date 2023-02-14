@@ -11,12 +11,12 @@ const config: DocsThemeConfig = {
   },
   docsRepositoryBase: 'https://github.com/bricklou/launcher-tutorials/blob/main',
   footer: {
-    text: <span>Powered with <a href="https://nextra.site/">Nextra</a></span>,
+    text: <span>Propulsé avec <a href="https://nextra.site/">Nextra</a></span>,
   },
   banner: {
     key: 'alpha',
-    text : <p>⚠ This website is currently WIP! Some content may be missing. ⚠</p>,
-  }
+    text : <p>⚠ Ce site est actuellement en cours d'écriture ! Certains contenus peuvent être manquants. ⚠</p>,
+  },
 }
 
 export default config
