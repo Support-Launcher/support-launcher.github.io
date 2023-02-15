@@ -1,0 +1,108 @@
+# Open Auth
+## Introduction
+[Open Auth](https://github.com/litarvan/openauth) est une librairie Java développée par [Litarvan](https://github.com/litarvan) qui permet de faire une authentification officielle pour un client minecraft.
+Dans cet article, nous parlerons exclusivement de l'authentification (cité sous le nom "d'auth" à partir de maintenant) par un compte Microsoft, car désormais Mojang ne support plus que cette méthode.
+## Importer la librairie
+Cette librairie est hébergée sur le maven de Litarvan, vous pouvez donc l'importer dans votre projet comme ceci :
+
+Avec gradle :
+```gradle
+repositories {
+    maven {
+        url 'https://litarvan.github.io/maven'
+    }
+}
+
+dependencies {
+    implementation 'fr.litarvan:openauth:VERSION'
+}
+```
+Avec maven :
+```maven
+<repositories>
+    <repository>
+        <id>litarvan</id>
+        <url>https://litarvan.github.io/maven</url>
+    </repository>
+</repositories>
+<dependencies>
+    <dependency>
+        <groupId>fr.litarvan</groupId>
+        <artifactId>openauth</artifactId>
+        <version>VERSION</version>
+    </dependency>
+</dependencies>
+```
+import { Callout } from "nextra-theme-docs";
+
+<Callout type="info" emoji="✅">
+    À l'heure où j'écris ces lignes, la dernière version est la __**1.1.4**__
+</Callout>
+
+## Authentification
+Plusieurs méthodes d'auth sont disponibles en fonction des besoins de l'application à développer.
+
+<Callout type="warning" emoji="⚠️">
+    Il faut choisir **une seule** méthode d'auth parmi les suivantes, faites attention a ne pas implémenter 2 de ces méthodes, cela serait inutile.
+</Callout>
+
+Pour toutes les méthodes d'auth suivantes, il faut déclarer un objet de type MicrosoftAuthenticator comme ceci :
+```java
+MicrosoftAuthenticator authenticator = new MicrosoftAuthenticator();
+```
+#### Auth par "Credentials":
+Cette méthode permet de se connecter avec l'email et le mot de passe du compte Microsoft, elle peut être utile dans le cas ou l'application intègre ses propres champs de texte pour la connexion.
+Voici comment l'utiliser :
+```java
+...
+MicrosoftAuthResult result = authenticator.loginWithCredentials("email", "password");
+```
+#### Auth par "WebView":
+Cette méthode permet de se connecter avec une interface de connexion Microsoft, comme ceci :
+<img src={"https://sharepointmaven.com/wp-content/uploads/2022/09/brandloginwindowmicrosoft3651.jpg"} alt="Image de la webview Microsoft"></img>
+Voici comment l'utiliser :
+
+```java
+...
+MicrosoftAuthResult result = authenticator.loginWithWebView();
+```
+<Callout type="warning" emoji="⚠️">
+    Attention, cette méthode n'est pas une méthode Async, c'est a dire que votre programme ne tournera plus en arrière plan lorsque cette fenêtre sera ouverte.
+    Cela peut causer des problèmes, par exemple, votre interface graphique ne tournera plus et vous aurez un beau message de windows vous disant que le programme ne réponds plus.
+    Cette méthode peux quand même être utile dans certains cas, c'est pourquoi je la présente ici.
+    Si vous voulez éviter ces problèmes, utiliser la fonction loginWithAsyncWebview() (voir plus bas)
+</Callout>
+
+#### Auth par "AsyncWebview":
+Cette fonction est la sœur de la précédente avec comme seul changement, d'être asyncrone, ce qui permet que votre programme continue de tourner en arrière plan.
+Voici comment l'utiliser :
+```java
+...
+MicrosoftAuthResult result = authenticator.loginWithWebView();
+```
+
+### Auth par "RefreshToken:
+Cette méthode d'auth, permet de se connecter avec un RefreshToken (que nous verrons plus tard), elle est utilisée pour éviter de se reconnecter à chaque lancement.
+Voici comment l'utiliser :
+```java
+...
+MicrosoftAuthResult result = authenticator.loginWithRefreshToken("refresh token");
+```
+
+### Résultat
+Pour toutes ces méthodes d'auth, nous obtenons un objet result de type MicrosoftAuthResult. Cet objet nous permet de récupérer plusieurs informations sur le compte que nous venons de connecter :
+- le profil avec la méthode ```result.getProfile()```
+- l'accesToken avec la méthode ```result.getAccessToken()```
+- le refreshToken avec la méthode ```result.getRefreshToken()```
+- l'xuid avec la méthode ```result.getXuid()```
+- le clientId avec la méthode ```result.getClientId()```
+
+#### Le profil
+La méthode ```result.getProfile()``` retourne uen objet de type MinecraftProfile, qui peut être utilisé avec les méthodes suivantes :
+- ```getId()``` permets de récupérer l'UUID du compte minecraft
+- ```getName()``` permets de récupérer le nom du compte du joueur
+- ```getSkins()``` permets de récupérer la liste des skins du joueur sous forme de MinecraftSkin[] (je ne détaillerais pas ici l'utilisation de cette classe que vous pouvez trouver [ici](https://github.com/Litarvan/OpenAuth/blob/518589d22210bf0763d9ae19d546ddf1dba3fb8c/src/main/java/fr/litarvan/openauth/microsoft/model/response/MinecraftProfile.java#L60))
+
+### Les tokens
+- L'accesToken est utilisé pour lancer le jeu, par exemple avec la librairie [OpenLauncherLib](https://github.com/Litarvan/OpenLauncherLib)
+- Et le refreshToken, dont nous avons déjà parlé avant, permet quant à lui de se reconnecter directement, sans avoir à rentrer de mot de passe, il est donc pratique de le sauvegarder dans un fichier après la connexion.
