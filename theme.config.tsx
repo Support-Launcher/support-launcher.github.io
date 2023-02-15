@@ -22,6 +22,7 @@ const config: DocsThemeConfig = {
   },
   banner: {
     key: "alpha",
+    dismissible: false,
     text: (
       <p>
         ⚠ Ce site est actuellement en cours d'écriture ! Certains contenus
