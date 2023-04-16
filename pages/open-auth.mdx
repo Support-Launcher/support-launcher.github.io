@@ -9,20 +9,19 @@ Dans cet article, nous parlerons exclusivement de l'authentification (cité sous
 
 Cette librairie est hébergée sur le maven de Litarvan, vous pouvez donc l'importer dans votre projet comme ceci :
 
-import { DynamicVersion } from "components/dynamic-version";
-
-<DynamicVersion version="1.1.4">
 Avec Gradle :
 
 ```groovy copy
 repositories {
+    mavenCentral()
     maven {
-        url 'https://litarvan.github.io/maven'
+        url = 'https://jitpack.io'
+        name = 'JitPack'
     }
 }
 
 dependencies {
-    implementation 'fr.litarvan:openauth:$VERSION'
+    implementation 'com.github.litarvan:openauth:518589d222'
 }
 
 ```
@@ -32,15 +31,15 @@ Avec Maven :
 ```xml copy
 <repositories>
     <repository>
-        <id>litarvan</id>
-        <url>https://litarvan.github.io/maven</url>
+        <id>JitPack</id>
+        <url>https://jitpack.io</url>
     </repository>
 </repositories>
 <dependencies>
     <dependency>
-        <groupId>fr.litarvan</groupId>
+        <groupId>com.github.litarvan</groupId>
         <artifactId>openauth</artifactId>
-        <version>$VERSION</version>
+        <version>518589d222</version>
     </dependency>
 </dependencies>
 ```
@@ -49,12 +48,10 @@ import { Callout } from "nextra-theme-docs";
 
 <Callout type="info" emoji="✅">
   À l'heure où est écrit ce tutoriel, la dernière version disponible est la
-  **$VERSION**. Allez sur la page des
+  **1.1.5** (qui est le commit `518589d222`, puisque cette version n'a pas été publié). Allez sur la page des
   [releases](https://github.com/Litarvan/OpenAuth/releases) pour voir la
   dernière version disponible.
 </Callout>
-
-</DynamicVersion>
 
 ## Authentification
 
