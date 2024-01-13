@@ -1,0 +1,31 @@
+import { Callout } from "nextra-theme-docs";
+
+<Callout type="information" emoji="❤">
+  noFramework est maintenant utilisé pour le lancement du jeu !
+</Callout>
+
+Cette class permet de lancer un client miecraft en utilisant FlowUpdater. Vous pouvez trouver plus d'informations à propos ici: [FlowUpdater](../../flow-updater)
+
+## Launch function
+```java
+public static void launch() {
+        try {
+            NoFramework noFramework = new NoFramework(
+                    gameDir,
+                    authInfos,
+                    GameFolder.FLOW_UPDATER
+            );
+            noFramework.getAdditionalVmArgs().add("-Xms1G");
+            noFramework.getAdditionalVmArgs().add("-Xmx" + getSaver().get("ram") + "G");
+
+            Process p = noFramework.launch("1.8.8", "", NoFramework.ModLoader.VANILLA);
+        } catch (Exception e) {
+            logger.printStackTrace(e);
+        }
+        ```
+
+### Vm arguments
+        Avec `"noFramework.getAdditionalVmArgs().add("eheh i'm a Vm argument");`,vous pouvez ajouter un argument à la jvm, mais vous n'avez pas enormément de possibilité d'utilisation dans notre cas. Générallement, vous allez l'utiliser comme un argument pour la ram.
+
+### Launch Process
+Le lancement est un process, donc vous pouvez obtenir certaines informations, comme celle de savoir s'il est toujours fonctionnel. [Plus d'informations](https://docs.oracle.com/javase/8/docs/api/java/lang/Process.html)
