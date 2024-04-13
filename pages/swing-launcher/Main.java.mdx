@@ -19,23 +19,24 @@ Nous mettons en place :
 ## isConnected?
 ```java
 MicrosoftAuthenticator microsoftAuthenticator = new MicrosoftAuthenticator();
-        final String refresh_token = getSaver().get("refresh_token");
-        MicrosoftAuthResult result;
+final String refresh_token = getSaver().get("refresh_token");
+MicrosoftAuthResult result;
 
-        if (refresh_token != null) {
-            try {
-                result = microsoftAuthenticator.loginWithRefreshToken(refresh_token);
-            } catch (MicrosoftAuthenticationException ex) {
-                throw new RuntimeException(ex);
-            }
-            Launcher.authInfos = new AuthInfos(result.getProfile().getName(), result.getAccessToken(), result.getProfile().getId());
-            System.out.printf("Logged in with '%s'%n", result.getProfile().getName());
-            setContentPane(new PHome());
-            repaint();
-            revalidate();
-        }
-        ```
+if (refresh_token != null) {
+    try {
+        result = microsoftAuthenticator.loginWithRefreshToken(refresh_token);
+    } catch (MicrosoftAuthenticationException ex) {
+        throw new RuntimeException(ex);
+    }
+    Launcher.authInfos = new AuthInfos(result.getProfile().getName(), result.getAccessToken(), result.getProfile().getId());
+    System.out.printf("Logged in with '%s'%n", result.getProfile().getName());
+    setContentPane(new PHome());
+    repaint();
+    revalidate();
+}
+```
         
+
 Ce bout de code vérifie si un compte microsoft (refresh_token, **pas les informations d'auth**) est sauvegardé dans le fichier du saver. Si c'est le cas, Le launcher se lance correctement, sinon une WebView de connexion s'affichera.
 
 ## Un peu d'amusement 
