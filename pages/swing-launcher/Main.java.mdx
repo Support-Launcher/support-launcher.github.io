@@ -2,7 +2,7 @@ import { Callout } from "nextra-theme-docs";
 
 # Main.java
 
-Cette class extends Jframe, donc nous pouvons directement utiliser la fonction Main() pour mettre en place la fenêtre. 
+Cette classe étends la classe Jframe, donc nous pouvons directement utiliser la fonction Main() pour mettre en place la fenêtre. 
 
 Nous mettons en place :
     - Le titre de la fenêtre
@@ -13,37 +13,38 @@ Nous mettons en place :
     - Si la fenêtre est redimensionnable.
 
 <Callout type="error" emoji="⚠️">
-  L'interface proposée n'est pas la votre, merci de créer la votre ! 
+  L'interface proposée est à titre d'exemple, merci de créer la votre ! 
 </Callout>
 
 ## isConnected?
 ```java
 MicrosoftAuthenticator microsoftAuthenticator = new MicrosoftAuthenticator();
-        final String refresh_token = getSaver().get("refresh_token");
-        MicrosoftAuthResult result;
+final String refresh_token = getSaver().get("refresh_token");
+MicrosoftAuthResult result;
 
-        if (refresh_token != null) {
-            try {
-                result = microsoftAuthenticator.loginWithRefreshToken(refresh_token);
-            } catch (MicrosoftAuthenticationException ex) {
-                throw new RuntimeException(ex);
-            }
-            Launcher.authInfos = new AuthInfos(result.getProfile().getName(), result.getAccessToken(), result.getProfile().getId());
-            System.out.printf("Logged in with '%s'%n", result.getProfile().getName());
-            setContentPane(new PHome());
-            repaint();
-            revalidate();
-        }
-        ```
+if (refresh_token != null) {
+    try {
+        result = microsoftAuthenticator.loginWithRefreshToken(refresh_token);
+    } catch (MicrosoftAuthenticationException ex) {
+        throw new RuntimeException(ex);
+    }
+    Launcher.authInfos = new AuthInfos(result.getProfile().getName(), result.getAccessToken(), result.getProfile().getId());
+    System.out.printf("Logged in with '%s'%n", result.getProfile().getName());
+    setContentPane(new PHome());
+    repaint();
+    revalidate();
+}
+```
         
-Ce bout de code vérifie si un compte microsoft (refresh_token, **pas les informations d'auth**) est sauvegardé dans le fichier du saver. Si c'est le cas, Le launcher se lace correctement, sinon une WebView de connexion s'affichera.
+
+Ce bout de code vérifie si un compte microsoft (refresh_token, **pas les informations d'auth**) est sauvegardé dans le fichier du saver. Si c'est le cas, Le launcher se lance correctement, sinon une WebView de connexion s'affichera.
 
 ## Un peu d'amusement 
 ### Déplacement de fenêtre
-J'ai ajouté une fonction qui permet aux uitilisateurs de bouger la fenêtre avec leur souris depuis l'intérieur de la fenêtre et non la barre des tâche.
+J'ai ajouté une fonction qui permet aux utilisateurs de bouger la fenêtre avec leur souris depuis l'intérieur de la fenêtre et non depuis la barre des tâches.
 
 #### Theme?
-J'ai également ajouté un theme swing (intellij theme).
+J'ai également ajouté un thème swing (intellij theme).
 
 
 <Callout type="information" emoji="🛠">
