@@ -22,15 +22,12 @@ menu:
     - name: Documentation
       pageRef: /docs
       weight: 1
-    - name: About
-      pageRef: /about
-      weight: 2
     - name: Search
-      weight: 3
+      weight: 2
       params:
         type: search
     - name: GitHub
-      weight: 4
+      weight: 3
       url: "https://github.com/bricklou/launcher-tutorials"
       params:
         icon: github
