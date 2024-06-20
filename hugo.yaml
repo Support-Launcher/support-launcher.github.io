@@ -1,9 +1,55 @@
 # yaml-language-server: $schema=https://json.schemastore.org/hugo.json
 
-baseURL: https://example.org/
-languageCode: en-us
-title: My New Hugo Site
+languageCode: fr-fr
+title: Launcher Tutorials
+
+defaultContentLanguage: fr
 
 module:
   imports:
     - path: github.com/imfing/hextra
+
+markup:
+  defaultMarkdownHandler: goldmark
+  highlight:
+    noClasses: false
+    lineNos: true
+
+enableInlineShortcodes: true
+
+menu:
+  main:
+    - name: Documentation
+      pageRef: /docs
+      weight: 1
+    - name: About
+      pageRef: /about
+      weight: 2
+    - name: Search
+      weight: 3
+      params:
+        type: search
+    - name: GitHub
+      weight: 4
+      url: "https://github.com/bricklou/launcher-tutorials"
+      params:
+        icon: github
+
+params:
+  theme:
+    default: system
+    displayToggle: true
+
+  editURL:
+    enable: true
+    base: "https://github.com/bricklou/launcher-tutorials/edit/main/content"
+
+  footer:
+    displayCopyright: false
+    displayPoweredBy: false
+
+enableEmoji: true
+enableRobotsTXT: true
+removePathAccents: true
+enableGitInfo: true
+timeZone: "Europe/Paris"
